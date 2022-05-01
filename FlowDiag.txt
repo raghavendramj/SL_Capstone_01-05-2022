@@ -1,0 +1,96 @@
+Flow -> 
+
+Admin -> Lands to List<Food> Page
+	1. Add Food
+		-> Open the new add food page
+		-> adds food successfully
+		-> redirects back to List<Food> Page
+		
+	2. Remove Food
+		-> Open the new add food page
+		-> removes food successfully
+		-> redirects back to List<Food> Page
+		
+	3. Edit Food
+		-> Open the new add food page
+		-> Edit food successfully
+		-> redirects back to List<Food> Page
+		
+User -> 
+
+1. Register
+	-> give details
+	-> register
+	-> redirect ti login page
+
+2. Login
+	-> give details
+	-> verify
+	-> redirect to login page if invalid creds
+	-> redirect to home page if valid creds
+
+3. Search a food
+	-> search Keyword
+	-> List<Food>
+	-> add items to cart
+	
+4. Filter the results
+	-> search Keyword
+	-> List<Food>
+	-> filter the results(UI Filtering only)
+
+UI Operations
+-----------------
+Registration Page
+Login Page
+	-> User/Admin 
+	-> Admin
+			-> List of Food
+			-> Edit the food
+			-> Add the new food
+			-> remove the food
+	-> User
+			-> Get List of Food
+			-> Search for food
+			-> Search with cusine
+			-> Add items to cart
+			-> Place order
+
+Technology:
+
+Angular
+	-> Components
+		-> LoginComp
+		-> RegisterComp
+		-> ListFoodComp
+			-> Search
+			-> Filter
+			-> Select  
+		-> CartComp 
+		-> OrderComp
+		-> PageNotFoundComp
+		-> HomeComp
+		
+BackEnd -> 
+	Spring Boot
+		-> Model
+			-> User
+			-> Food
+			-> CartDetails
+			-> OrderDetails
+		-> Controller
+			-> UserController
+				-> /login
+				-> /register
+				-> /search/foodkeyword/
+				-> /place/order 
+			-> AdminController
+				-> /add/food
+				-> /remove/food
+				-> /edit/food
+				
+				
+	Spring JPA
+	Spring Security
+	MySQL
+

@@ -1,0 +1,93 @@
+Features of the application:
+
+ICIN Bank
+-----------
+List of Tables :-
+	User
+		id, firstName, lastName, phone, address, email, username, password, dob, user_type, currency
+	@OneToOne
+	Account account;
+
+	Account
+		id, acc_no, balance, username, acc_type, acc_status(Active/Inactive/Blocked..), authorized
+	@OneToOne
+	User User;
+
+	Transfer
+		id, sender_acc, receiver_acc, amount, date
+
+	TransactionDetails
+		id, from_date, to_date, acc_no, action(credit/debit)
+
+	ChequeBookRequest
+		id, acc_no, acc_type, request_status(Grant/Reject/PutOnHold), date, no_of_pages
+
+
+Registration 						-> User
+Login 									-> User
+Account transactions 			-> TransactionDetails
+Transfers 								-> Transfer
+Savings details 					-> Account
+Profile settings 					-> User
+Requesting cheque books 	-> ChequeBookRequest
+
+
+Admin Portal:
+It deals with all the back-end data generation and product information. The admin user should be able to:
+	
+	Get All Users
+		GET  ALL-> admin/users/
+		GET -> admin/users/{user_id} 
+		POST -> admin/adduser/ + RquestBody{ name: 'XYZ', email:'xyz@gmail.com'}
+
+	Authorize the roles and guidelines for the user 
+		-> admin/{username}/authorize/ -> +Ve Case ->Accept
+		-> admin/{username}/authorize/ -> -Ve Case -> Decline/Cancel
+	Grant access to the user regarding money transfer, deposits, and withdrawal 
+		-> admin/{username}/feature/{feature_id} (Money Transfer/Deposit/Withdrawl)
+	Block the user account in case of any threat
+		-> admin/{username}/restrictAccess
+	Authorize the cheque book requests
+		-> admin/chequebook/request/all -> Get All Request
+		->admin /chequebook/request/confirm -> Accept the request
+		
+User Portal:
+	User Action
+		-> /user/login
+		-> /user/register
+		-> user/account/details/{account_details}
+		-> user/account/profile
+		-> user/account/deposit + @RequestBody -> {account_details}
+		-> user/account/withdrawal + @RequestBody -> {account_details}
+		-> user/account/transfer + @RequestBody -> {transfer}
+		-> user/account/transaction_details/{acc_no}
+		
+		
+	It deals with the user activities. The user should be able to:
+		Register or log in to the application to maintain a record of activities	
+			-> bank/user/register
+		Deposit and withdraw money from the account
+		View transactions and balance in the primary and savings account
+		Transfer funds between different accounts and add recipients
+		Request cheque books for different accounts		
+		
+		
+Front End
+	-> Routers
+	Admin Actions
+		->  See all the users accounts 
+			->   /admin/ -> AdminComponent -> See all the users accounts -> BLOCK/GET_DETAILS/...
+		-> See all the requests for cheque book
+			-> /admin/chequeRequests -> ChequeBookRequestComponent -> See all the users accounts -> BLOCK/GET_DETAILS/... 
+		-> /admin/block -> AdminOperationComponent 
+		-> /admin/unblock -> AdminOperationComponent 
+		-> /admin/putOnHold -> AdminOperationComponent 
+	
+	Users Actions
+		-> user/login-> Component -> LoginComponent -> Database -> Session/Local Storage
+		-> user/register-> Component -> RegisterComponent -> Database Save -> Login
+		-> user/transfer -> TransferComponent -> 
+		-> user/withdraw -> WithDrawComponent
+		-> user/deposit -> DepositComponent
+		-> error -> ErrorPageComponent
+		
